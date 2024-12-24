@@ -19,6 +19,8 @@ const TextEditor: React.FC<TextEditorProps> = ({
   className,
 }) => {
   const { control } = useFormContext();
+  const apiKey = import.meta.env.VITE_TINYMCE_API_KEY || "";
+
 
   return (
     <div className={className}>
@@ -34,7 +36,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
           >
             <Editor
               id={name}
-              apiKey="14x9ym3ocut28sizmxwsnyrtmivagbcljsio9abkb4z6nsy7" // Replace with your TinyMCE API key
+              apiKey={apiKey} // Replace with your TinyMCE API key
               value={field.value || ""}
               init={{
                 height: 300,
