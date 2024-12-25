@@ -12,9 +12,9 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextFieldDefault from '../../components/molecules/text-field/default';
-import SelectDefault from '../../components/molecules/select/default';
-import CheckboxDefault from '../../components/molecules/checkbox/default';
+import TextFieldDefault from '../../../molecules/text-field/default';
+import SelectDefault from '../../../molecules/select/default';
+import CheckboxDefault from '../../../molecules/checkbox/default';
 
 interface OfficialStructureProps {
   name: string; // Parent name for the array

@@ -12,8 +12,8 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextFieldDefault from '../../components/molecules/text-field/default';
-import TextFieldPrefixNumber from '../../components/molecules/text-field/prefix-for-number';
+import TextFieldDefault from '../../../molecules/text-field/default';
+import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-for-number';
 
 interface ListOfShareholdersProps {
   name: string; // Parent name for the array

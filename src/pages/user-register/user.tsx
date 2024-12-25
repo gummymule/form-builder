@@ -8,11 +8,12 @@ import RadioButtonDefault from '../../components/molecules/radio/default';
 import DatePickerDefault from '../../components/molecules/date-picker/default';
 import SelectDefault from '../../components/molecules/select/default';
 import SearchSelect from '../../components/molecules/select/search-select';
-import OfficialStructureTable from './official-structure';
+import OfficialStructureTable from '../../components/organism/forms/user-register/official-structure';
 import { CardWithHeader } from '../../components/atoms/card/with-header';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import ListOfShareholdersTable from './list-of-shareholders';
+import ListOfShareholdersTable from '../../components/organism/forms/user-register/list-of-shareholders';
 import TextEditor from '../../components/molecules/text-editor/default';
+import FileUpload from '../../components/molecules/file-upload/default';
 // import dayjs from 'dayjs';
 
 const queryOptions = [
@@ -68,11 +69,16 @@ const schema = z.object({
     })
   ),
   company_overview: z.string().min(1, 'Company Overview is required'),
+  files: z.array(z.any()).optional(),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const User: React.FC = () => {
+interface UserProps {
+  setNavState: (state: string) => void;
+}
+
+const User: React.FC<UserProps> = ({ setNavState }) => {
   const methods = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -101,6 +107,7 @@ const User: React.FC = () => {
         }
       ],
       company_overview: '',
+      files: []
     },
   });
 
@@ -117,8 +124,24 @@ const User: React.FC = () => {
     }
   };
 
+  const handleFileUpload = async (files: File[]) => {
+    // Simulate API call
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // Replace with your actual API endpoint
+      // await fetch("https://your-api-endpoint/upload", {
+      //   method: "POST",
+      //   body: formData,
+      // });
+    }
+    // alert("Files uploaded successfully!");
+  };
+
   const onSubmit = (data: FormData) => {
     console.log(data);
+    setNavState("2");
   };
 
   const onError = (errors: typeof formState.errors) => {
@@ -237,6 +260,22 @@ const User: React.FC = () => {
             name="company_overview"
             placeholder="Enter your text here..."
             errors={errors.company_overview?.message}
+          />
+        </CardWithHeader>
+        <CardWithHeader
+          icon={<TextSnippetIcon />}
+          label="Attachments"
+          sx= {{
+            marginBottom: '15px'
+          }}
+        >
+          <FileUpload 
+            name="files"
+            accept=".pdf,.docx,image/*"
+            multiple={true}
+            maxSizeMB={10}
+            onSubmit={handleFileUpload}
+            errors={methods.formState.errors.files?.message}
           />
         </CardWithHeader>
         <div className="flex py-4 justify-end gap-4">

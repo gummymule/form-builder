@@ -1,5 +1,5 @@
 import './App.css'
-import User from './pages/user-register/user';
+import Home from './pages/user-register/home';
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div>
-        <User />
+        <Home />
       </div>
     </>
   )
