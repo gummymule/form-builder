@@ -12,6 +12,7 @@ type NavbarScrollableProps = {
   navState?: string;
   getTabValue?: (value: string) => void;
   sx?: object;
+  cn?: object;
   isTabDisabled?: boolean;
 };
 
@@ -20,6 +21,7 @@ export const NavbarScrollable: React.FC<NavbarScrollableProps> = ({
   navState,
   getTabValue,
   sx,
+  cn,
   isTabDisabled = false,
 }) => {
   const [value, setValue] = useState<string>(navState || navData[0]?.value || "1");
@@ -47,6 +49,7 @@ export const NavbarScrollable: React.FC<NavbarScrollableProps> = ({
           borderRadius: "8px",
           marginBottom: "2rem",
           padding: "0.5rem",
+          ...cn,
         }}
       >
         <Tabs
@@ -60,6 +63,8 @@ export const NavbarScrollable: React.FC<NavbarScrollableProps> = ({
               color: "#303030",
               fontWeight: 400,
               fontSize: "14px",
+              fontFamily: 'Poppins, sans',
+              textTransform: "none",
               opacity: isTabDisabled ? 1 : undefined,
               pointerEvents: isTabDisabled ? "none" : "auto",
             },

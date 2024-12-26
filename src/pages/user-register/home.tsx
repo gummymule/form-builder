@@ -33,7 +33,15 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <NavbarDefault navData={navbarState} navState={navState} />
+      <NavbarDefault 
+        navData={navbarState} 
+        navState={navState} 
+        cn={{
+          position: "sticky",
+          top: 0,
+          zIndex: 9
+        }}
+      />
     </div>
   );
 };
