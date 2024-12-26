@@ -3,6 +3,11 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Box, Button, Typography, IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
+import { IconFilePDF } from "../../atoms/icon/filePDF";
+import { IconFileDocx } from "../../atoms/icon/fileDocx";
+import { IconFileCSV } from "../../atoms/icon/fileCSV";
+import { IconFileJPG } from "../../atoms/icon/fileJPG";
+import { IconFile } from "../../atoms/icon/fileIcon";
 
 interface FileUploadProps {
   name: string;
@@ -64,35 +69,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
     if (fileType.startsWith("image/")) {
       return (
-        <img
-          src={URL.createObjectURL(file)}
-          alt={file.name}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-        />
+        <IconFileJPG />
       );
     }
 
     if (fileType === "application/pdf") {
       return (
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#f44336",
-            color: "#fff",
-            fontWeight: "bold",
-            fontSize: "14px",
-          }}
-        >
-          PDF
-        </Box>
+        <IconFilePDF />
       );
     }
 
@@ -102,21 +85,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       fileType === "application/msword"
     ) {
       return (
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#3f51b5",
-            color: "#fff",
-            fontWeight: "bold",
-            fontSize: "14px",
-          }}
-        >
-          DOCX
-        </Box>
+        <IconFileDocx />
       );
     }
 
@@ -126,40 +95,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
       fileType === "application/vnd.ms-excel"
     ) {
       return (
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#4caf50",
-            color: "#fff",
-            fontWeight: "bold",
-            fontSize: "14px",
-          }}
-        >
-          XLSX
-        </Box>
+        <IconFileCSV />
       );
     }
 
     return (
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#607d8b",
-          color: "#fff",
-          fontWeight: "bold",
-          fontSize: "12px",
-        }}
-      >
-        FILE
-      </Box>
+      <IconFile />
     );
   };
 
@@ -238,7 +179,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
                       sx={{
                         width: "100px",
                         height: "140px", // Increased height to accommodate the title
-                        border: "1px solid #ccc",
                         borderRadius: "8px",
                         overflow: "hidden",
                         position: "relative",
@@ -249,17 +189,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         backgroundColor: "#f8f8f8",
                       }}
                     >
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        {renderThumbnail(file)}
-                      </Box>
+                      {renderThumbnail(file)}
                       <Typography
                         variant="caption"
                         sx={{
@@ -275,8 +205,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         size="small"
                         sx={{
                           position: "absolute",
-                          top: 4,
-                          right: 4,
+                          top: 0,
+                          right: 0,
                           backgroundColor: "rgba(255, 255, 255, 0.8)",
                           color: "red",
                           "&:hover": { backgroundColor: "rgba(255, 255, 255, 1)" },
