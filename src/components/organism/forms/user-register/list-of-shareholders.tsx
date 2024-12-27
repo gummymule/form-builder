@@ -71,7 +71,7 @@ const ListOfShareholdersTable: React.FC<ListOfShareholdersProps> = ({ name }) =>
               {/* Name */}
               <TableCell>
                 <TextFieldDefault 
-                  name={`list_shareholders.${index}.name`}
+                  name={`${name}.${index}.name`}
                   className="mt-5"
                   errors={listShareholdersErrors?.[index]?.name?.message}
                 />
@@ -79,7 +79,7 @@ const ListOfShareholdersTable: React.FC<ListOfShareholdersProps> = ({ name }) =>
               {/* Shareholding */}
               <TableCell>
                 <TextFieldPrefixNumber
-                  name={`list_shareholders.${index}.shareholding`}
+                  name={`${name}.${index}.shareholding`}
                   className="mt-3.5"
                   prefix="%"
                   prefixPosition="end"

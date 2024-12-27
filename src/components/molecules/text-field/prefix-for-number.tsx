@@ -26,7 +26,7 @@ const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
   prefixPosition = 'start',
   textAlign = 'right',
   errors,
-  decimalScale = 2,
+  decimalScale,
   allowNegative = false,
   thousandSeparator = true,
   disabled = false,

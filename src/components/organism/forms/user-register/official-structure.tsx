@@ -79,7 +79,7 @@ const OfficialStructureTable: React.FC<OfficialStructureProps> = ({ name }) => {
               {/* Nama Pejabat */}
               <TableCell>
               <TextFieldDefault 
-                name={`official_structure.${index}.name`}
+                name={`${name}.${index}.name`}
                 className="mt-6"
                 errors={officialStructureErrors?.[index]?.name?.message}
               />
@@ -88,7 +88,7 @@ const OfficialStructureTable: React.FC<OfficialStructureProps> = ({ name }) => {
               {/* Jabatan */}
               <TableCell>
               <SelectDefault 
-                name={`official_structure.${index}.position`} 
+                name={`${name}.${index}.position`} 
                 options={positions}
                 errors={officialStructureErrors?.[index]?.position?.message}
               />
@@ -97,7 +97,7 @@ const OfficialStructureTable: React.FC<OfficialStructureProps> = ({ name }) => {
               {/* Keterangan Pejabat */}
               <TableCell>
               <SelectDefault 
-                name={`official_structure.${index}.role`} 
+                name={`${name}.${index}.role`} 
                 options={roles} 
                 errors={officialStructureErrors?.[index]?.role?.message}
               />
@@ -107,7 +107,7 @@ const OfficialStructureTable: React.FC<OfficialStructureProps> = ({ name }) => {
               <TableCell>
                 <div className="flex justify-center items-center">
                   <CheckboxDefault 
-                    name={`official_structure.${index}.attached_appendix`} 
+                    name={`${name}.${index}.attached_appendix`} 
                   />
                 </div>
               </TableCell>

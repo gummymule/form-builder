@@ -6,6 +6,7 @@ import { CardWithHeader } from "../../components/atoms/card/with-header";
 import TextEditor from "../../components/molecules/text-editor/default";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import CurrencyKursSection from "../../components/organism/forms/transactions-purpose/currency-and-kurs";
+import FacilitiesForm from "../../components/organism/forms/transactions-purpose/facilities-form";
 
 
 const schema = z.object({
@@ -14,9 +15,18 @@ const schema = z.object({
   currency_kurs: z.array(
     z.object({
       currency: z.string().min(1, 'Currency is required'),
-      kurs: z.string().min(1, 'Kurs is required')
+      kurs: z.number().min(1, 'Kurs is required')
     })
-  )
+  ),
+  facility_loan: z.array(
+    z.object({
+      facility_type: z.string().min(1, 'Facility Type is required'),
+      currency: z.string().min(1, 'Currency is required'),
+      limit: z.number().min(1, 'Limit is required'),
+      exposure: z.number().min(1, 'Exposure is required'),
+      final_exposure: z.number().min(1, 'Final Exposure is required'),
+    })
+  ),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -33,7 +43,14 @@ const Transactions: React.FC<TransactionProps> = ({ setNavState }) => {
       market_information: '',
       currency_kurs: [{ 
         currency: '', 
-        kurs: '' 
+        kurs: 0 
+      }],
+      facility_loan: [{ 
+        facility_type: '', 
+        currency: '', 
+        limit: 0, 
+        exposure: 0, 
+        final_exposure: 0 
       }],
     },
   });
@@ -95,6 +112,15 @@ const Transactions: React.FC<TransactionProps> = ({ setNavState }) => {
           }}
         >
           <CurrencyKursSection name="currency_kurs" />
+        </CardWithHeader>
+        <CardWithHeader
+          icon={<TextSnippetIcon />}
+          label="Transaction Purpose"
+          sx= {{
+            marginBottom: '15px'
+          }}
+        > 
+          <FacilitiesForm name="facility_loan" />
         </CardWithHeader>
         <div className="flex py-4 justify-end gap-4">
           <Button type="reset" variant="outlined" color="primary">

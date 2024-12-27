@@ -1,9 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import {
-  Button,
-  IconButton,
-} from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SelectDefault from '../../../molecules/select/default';
 import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-for-number';
@@ -28,7 +25,7 @@ interface CurrencyKursProps {
 }
 
 const CurrencyKursSection: React.FC<CurrencyKursProps> = ({ name }) => {
-  const { control, setValue, formState: { errors } } = useFormContext(); // Fixed 'formState'
+  const { control, setValue, formState: { errors } } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -37,7 +34,7 @@ const CurrencyKursSection: React.FC<CurrencyKursProps> = ({ name }) => {
 
   const watchedCurrencies = useWatch({
     control,
-    name: `${name}`, // Watch the entire array
+    name, // Watch the entire array
   });
 
   const currencyKursErrors = Array.isArray(errors.currency_kurs)
@@ -47,6 +44,16 @@ const CurrencyKursSection: React.FC<CurrencyKursProps> = ({ name }) => {
   const addNewCurrency = () => {
     append({ currency: '', kurs: '' });
   };
+
+  useEffect(() => {
+    if (watchedCurrencies) {
+      watchedCurrencies.forEach((currencyItem: { currency: string; kurs: number }, index: number) => {
+        if (currencyItem?.currency === 'IDR' && currencyItem?.kurs !== 1) {
+          setValue(`${name}.${index}.kurs`, 1);
+        }
+      });
+    }
+  }, [watchedCurrencies, name, setValue]);
 
   return (
     <div className="w-full px-3">
@@ -62,51 +69,42 @@ const CurrencyKursSection: React.FC<CurrencyKursProps> = ({ name }) => {
           </div>
         ))}
       </div>
-      {fields.map((field, index) => {
-        const currentCurrency = watchedCurrencies?.[index]?.currency;
-
-        // Automatically set 'kurs' to 1 if currency is IDR
-        if (currentCurrency === 'IDR' && watchedCurrencies?.[index]?.kurs !== '1') {
-          setValue(`${name}.${index}.kurs`, '1');
-        }
-
-        return (
-          <div className="flex gap-4" key={field.id}>
-            {/* Currency Selection */}
-            <div className="col-span-1 w-5/12">
-              <SelectDefault
-                name={`${name}.${index}.currency`}
-                options={currencies}
-                errors={currencyKursErrors?.[index]?.currency?.message}
-              />
-            </div>
-            {/* Kurs Field */}
-            <div className="col-span-1 w-5/12">
-              <TextFieldPrefixNumber
-                name={`${name}.${index}.kurs`}
-                prefix="Rp"
-                prefixPosition="start"
-                textAlign="left"
-                className="py-6"
-                errors={currencyKursErrors?.[index]?.kurs?.message}
-                disabled={currentCurrency === 'IDR'}
-              />
-            </div>
-            {/* Action */}
-            <div className="col-span-1 w-2/12 py-3 my-auto items-center flex justify-center">
-              <div className="flex flex-col items-center">
-                <IconButton
-                  onClick={() => remove(index)}
-                  color="error"
-                  disabled={index === 0}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </div>
+      {fields.map((field, index) => (
+        <div className="flex gap-4" key={field.id}>
+          {/* Currency Selection */}
+          <div className="col-span-1 w-5/12">
+            <SelectDefault
+              name={`${name}.${index}.currency`}
+              options={currencies}
+              errors={currencyKursErrors?.[index]?.currency?.message}
+            />
+          </div>
+          {/* Kurs Field */}
+          <div className="col-span-1 w-5/12">
+            <TextFieldPrefixNumber
+              name={`${name}.${index}.kurs`}
+              prefix="Rp"
+              prefixPosition="start"
+              textAlign="left"
+              className="py-6"
+              errors={currencyKursErrors?.[index]?.kurs?.message}
+              disabled={watchedCurrencies?.[index]?.currency === 'IDR'}
+            />
+          </div>
+          {/* Action */}
+          <div className="col-span-1 w-2/12 py-3 my-auto items-center flex justify-center">
+            <div className="flex flex-col items-center">
+              <IconButton
+                onClick={() => remove(index)}
+                color="error"
+                disabled={index === 0}
+              >
+                <DeleteIcon />
+              </IconButton>
             </div>
           </div>
-        );
-      })}
+        </div>
+      ))}
 
       {/* Add New Currency Button */}
       <div className="p-4 flex justify-end">
