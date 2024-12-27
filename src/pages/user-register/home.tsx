@@ -11,7 +11,7 @@ interface NavbarState {
 }
 
 const Home: React.FC = () => {
-  const [navState, setNavState] = useState<string>("1");
+  const [navState, setNavState] = useState<string>("2");
 
   const navbarState: NavbarState[] = [
     {

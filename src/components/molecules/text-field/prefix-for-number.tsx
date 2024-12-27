@@ -1,6 +1,8 @@
 import React from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
+import { TextLabel } from '../../atoms/typographies/label';
 
 interface TextFieldPrefixNumberProps {
   name: string; // Name for React Hook Form
@@ -10,6 +12,10 @@ interface TextFieldPrefixNumberProps {
   prefixPosition?: 'start' | 'end'; // Position of the prefix
   textAlign?: 'left' | 'right'; // Text alignment
   errors?: string; // Error message for validation
+  decimalScale?: number; // Number of decimal places
+  allowNegative?: boolean; // Allow negative values
+  thousandSeparator?: boolean; // Add thousand separator
+  disabled?: boolean; // Disable the input
 }
 
 const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
@@ -20,25 +26,33 @@ const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
   prefixPosition = 'start',
   textAlign = 'right',
   errors,
+  decimalScale = 2,
+  allowNegative = false,
+  thousandSeparator = true,
+  disabled = false,
 }) => {
   const { control } = useFormContext();
 
   return (
     <div className={`${className}`}>
+      <TextLabel>{label}</TextLabel>
       <Controller
         name={name}
         control={control}
         defaultValue="" // Ensure the field is always controlled
         render={({ field }) => (
-          <TextField
+          <NumericFormat
             {...field}
+            customInput={TextField}
             value={field.value || ''} // Ensure controlled value
-            label={label}
             fullWidth
             variant="outlined"
-            margin="normal"
             error={!!errors}
             helperText={errors}
+            decimalScale={decimalScale}
+            allowNegative={allowNegative}
+            thousandSeparator={thousandSeparator}
+            disabled={disabled}
             InputProps={{
               inputProps: {
                 style: { textAlign }, // Custom text alignment
