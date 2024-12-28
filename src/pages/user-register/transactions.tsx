@@ -15,16 +15,16 @@ const schema = z.object({
   currency_kurs: z.array(
     z.object({
       currency: z.string().min(1, 'Currency is required'),
-      kurs: z.number().min(1, 'Kurs is required')
+      kurs: z.string().min(1, 'Kurs is required')
     })
   ),
   facility_loan: z.array(
     z.object({
       facility_type: z.string().min(1, 'Facility Type is required'),
       currency: z.string().min(1, 'Currency is required'),
-      limit: z.number().min(1, 'Limit is required'),
-      exposure: z.number().min(1, 'Exposure is required'),
-      final_exposure: z.number().min(1, 'Final Exposure is required'),
+      limit: z.string().min(1, 'Limit is required'),
+      exposure: z.string().min(1, 'Exposure is required'),
+      final_exposure: z.string().min(1, 'Final Exposure is required'),
     })
   ),
 });
@@ -43,14 +43,14 @@ const Transactions: React.FC<TransactionProps> = ({ setNavState }) => {
       market_information: '',
       currency_kurs: [{ 
         currency: '', 
-        kurs: 0 
+        kurs: '' 
       }],
       facility_loan: [{ 
         facility_type: '', 
         currency: '', 
-        limit: 0, 
-        exposure: 0, 
-        final_exposure: 0 
+        limit: '', 
+        exposure: '', 
+        final_exposure: '' 
       }],
     },
   });

@@ -12,10 +12,8 @@ interface TextFieldPrefixNumberProps {
   prefixPosition?: 'start' | 'end'; // Position of the prefix
   textAlign?: 'left' | 'right'; // Text alignment
   errors?: string; // Error message for validation
-  decimalScale?: number; // Number of decimal places
-  allowNegative?: boolean; // Allow negative values
-  thousandSeparator?: boolean; // Add thousand separator
   disabled?: boolean; // Disable the input
+  [key: string]: string | number | boolean | undefined; // Other props
 }
 
 const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
@@ -26,10 +24,8 @@ const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
   prefixPosition = 'start',
   textAlign = 'right',
   errors,
-  decimalScale,
-  allowNegative = false,
-  thousandSeparator = true,
   disabled = false,
+  ...props
 }) => {
   const { control } = useFormContext();
 
@@ -45,13 +41,13 @@ const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
             {...field}
             customInput={TextField}
             value={field.value || ''} // Ensure controlled value
+            onValueChange={(values) => field.onChange(values.value)} 
             fullWidth
             variant="outlined"
             error={!!errors}
             helperText={errors}
-            decimalScale={decimalScale}
-            allowNegative={allowNegative}
-            thousandSeparator={thousandSeparator}
+            thousandSeparator=","
+            decimalSeparator="."
             disabled={disabled}
             InputProps={{
               inputProps: {
@@ -66,6 +62,8 @@ const TextFieldPrefixNumber: React.FC<TextFieldPrefixNumberProps> = ({
                   <InputAdornment position="end">{prefix}</InputAdornment>
                 ) : undefined,
             }}
+            inputMode="numeric"
+            {...props}
           />
         )}
       />

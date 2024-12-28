@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextFieldDefault from '../../../molecules/text-field/default';
-import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-for-number';
+import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-postfix-number';
 
 interface ListOfShareholdersProps {
   name: string; // Parent name for the array

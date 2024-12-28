@@ -1,5 +1,5 @@
-import React from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import {
   Button,
   IconButton,
@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SelectDefault from '../../../molecules/select/default';
-import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-for-number';
+import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-postfix-number';
 
 interface FacilitiesFormProps {
   name: string; // Parent name for the array
@@ -31,7 +31,7 @@ const facilityOptions = [
 ];
 
 const FacilitiesForm: React.FC<FacilitiesFormProps> = ({ name }) => {
-  const { control, formState: { errors }, watch } = useFormContext(); // Fixed 'formState'
+  const { control, formState: { errors }, watch, setValue } = useFormContext(); // Fixed 'formState'
   const currencyKurs = watch('currency_kurs'); // Watch the parent `currency_kurs` field
 
   // Safely check if errors.facility_loan is an array
@@ -49,6 +49,33 @@ const FacilitiesForm: React.FC<FacilitiesFormProps> = ({ name }) => {
     label: item.currency,
     value: item.currency,
   })) || [];
+
+  const watchedFacility = useWatch({
+    control,
+    name: `${name}`, // Watch the entire array
+  });
+
+  useEffect(() => {
+    fields.forEach((field, index) => {
+        // Get the exposure value, removing commas and defaulting to 0 if invalid
+        const exposureRaw = watchedFacility?.[index]?.exposure || "0";
+        const exposure = parseInt(exposureRaw.replace(/,/g, ""), 10);
+
+        // Get the kurs value, removing commas and defaulting to "1" if not found
+        const currency = watchedFacility?.[index]?.currency;
+        const kursRaw = currencyKurs.find(
+            (item: { currency: string }) => item.currency === currency
+        )?.kurs || "1";
+        const kurs = parseInt(kursRaw.replace(/,/g, ""), 10);
+
+        // Calculate the final exposure
+        const finalExposure = exposure * kurs;
+
+        // Set the calculated final_exposure
+        setValue(`${name}.${index}.final_exposure`, finalExposure);
+    });
+  }, [watchedFacility, currencyKurs, fields, name, setValue]);
+
 
   const addNewFacility = () => {
     append({ facility_type: '', currency: '', limit: 0, exposure: 0, final_exposure: 0 });
@@ -129,6 +156,7 @@ const FacilitiesForm: React.FC<FacilitiesFormProps> = ({ name }) => {
                   textAlign="right"
                   className="mt-6"
                   errors={facilityFormErrors?.[index]?.final_exposure?.message}
+                  disabled={true}
                 />
               </TableCell>
 

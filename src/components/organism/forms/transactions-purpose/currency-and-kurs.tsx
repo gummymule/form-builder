@@ -3,7 +3,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SelectDefault from '../../../molecules/select/default';
-import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-for-number';
+import TextFieldPrefixNumber from '../../../molecules/text-field/prefix-postfix-number';
 import { TextLabel } from '../../../atoms/typographies/label';
 
 const currencies = [
@@ -49,7 +49,7 @@ const CurrencyKursSection: React.FC<CurrencyKursProps> = ({ name }) => {
     if (watchedCurrencies) {
       watchedCurrencies.forEach((currencyItem: { currency: string; kurs: number }, index: number) => {
         if (currencyItem?.currency === 'IDR' && currencyItem?.kurs !== 1) {
-          setValue(`${name}.${index}.kurs`, 1);
+          setValue(`${name}.${index}.kurs`, "1");
         }
       });
     }
