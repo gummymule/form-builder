@@ -4,7 +4,6 @@ import { Button } from '@mui/material';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import TextFieldDefault from '../../components/molecules/text-field/default';
-import RadioButtonDefault from '../../components/molecules/radio/default';
 import DatePickerDefault from '../../components/molecules/date-picker/default';
 import SelectDefault from '../../components/molecules/select/default';
 import SearchSelect from '../../components/molecules/select/search-select';
@@ -14,6 +13,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import ListOfShareholdersTable from '../../components/organism/forms/user-register/list-of-shareholders';
 import TextEditor from '../../components/molecules/text-editor/default';
 import FileUpload from '../../components/molecules/file-upload/default';
+import RadioButtonHorizontal from '../../components/molecules/radio/horizontal';
 // import dayjs from 'dayjs';
 
 const queryOptions = [
@@ -178,7 +178,7 @@ const User: React.FC<UserProps> = ({ setNavState }) => {
             />
           </div>
           <div className="py-2 grid grid-cols-2 gap-4">
-            <RadioButtonDefault 
+            <RadioButtonHorizontal 
               name="query_type"
               label="Query Type" 
               options={queryOptions}
