@@ -1,55 +1,44 @@
-import React from 'react';
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormHelperText } from '@mui/material';
-import { Controller, useFormContext } from 'react-hook-form';
-import { TextLabel } from '../../atoms/typographies/label';
+import React from "react";
+import { Radio, FormControlLabel, FormHelperText, FormControl } from "@mui/material";
+import { useController, useFormContext } from "react-hook-form";
 
-type HookFormRadioButtonProps = {
+interface RadioButtonProps {
   name: string;
-  label?: string;
-  options: { label: string; value: string }[];
-  required?: boolean;
+  value: string;
+  label: string;
   className?: string;
-  errors?: string; // Add optional errors prop
-};
+  errors?: string;
+}
 
-const RadioButtonDefault: React.FC<HookFormRadioButtonProps> = ({
+const RadioButtonDefault: React.FC<RadioButtonProps> = ({
   name,
+  value,
   label,
-  options,
-  required = false,
   className,
   errors,
 }) => {
   const { control } = useFormContext();
+  const {
+    field: { value: fieldValue, onChange },
+  } = useController({
+    name,
+    control,
+    defaultValue: "", // Set initial value to empty (or any value to reset)
+  });
 
   return (
-    <div className={`${className}`}>
-      <TextLabel>{label}</TextLabel>
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={options[0]?.value || ''}
-        render={({ field }) => (
-          <FormControl component="fieldset" error={!!errors} required={required} fullWidth>
-            <RadioGroup {...field} row>
-              {options.map((option) => (
-                <div
-                  key={option.value}
-                  className="border rounded-md px-4 py-2 flex justify-center mr-4 hover:shadow-md"
-                >
-                  <FormControlLabel
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                  />
-                </div>
-              ))}
-            </RadioGroup>
-            {errors && <FormHelperText>{errors}</FormHelperText>}
-          </FormControl>
-        )}
+    <FormControl error={!!errors} component="fieldset" className={className}>
+      <FormControlLabel
+        control={
+          <Radio
+            checked={fieldValue === value}
+            onChange={() => onChange(value)} // Update form value
+          />
+        }
+        label={label}
       />
-    </div>
+      {errors && <FormHelperText>{errors}</FormHelperText>}
+    </FormControl>
   );
 };
 
