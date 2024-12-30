@@ -8,9 +8,8 @@ import TextEditor from "../../components/molecules/text-editor/default";
 import { CardDefault } from "../../components/atoms/card/default";
 import RadioButtonDefault from "../../components/molecules/radio/default";
 import SelectDefault from "../../components/molecules/select/default";
-import TextFieldPrefixNumber from "../../components/molecules/text-field/prefix-postfix-number";
 import RadioButtonHorizontal from "../../components/molecules/radio/horizontal";
-// import RadioButtonDefault from "../../components/molecules/radio/default";
+import TextFieldCardNumber from "../../components/molecules/text-field/text-field-card-number";
 
 const plans = [
   {
@@ -189,10 +188,9 @@ const Payment: React.FC<PaymentProps>  = ({ setNavState }) => {
               options={bankOptions} 
               errors={errors.bank?.message}
             />
-            <TextFieldPrefixNumber
+            <TextFieldCardNumber
               name="card_number"
               label="Card Number" 
-              textAlign="left"
               className="mt-6"
               errors={errors?.card_number?.message}
             />
