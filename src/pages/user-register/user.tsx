@@ -7,7 +7,7 @@ import TextFieldDefault from '../../components/molecules/text-field/default';
 import DatePickerDefault from '../../components/molecules/date-picker/default';
 import SelectDefault from '../../components/molecules/select/default';
 import SearchSelect from '../../components/molecules/select/search-select';
-import OfficialStructureTable from '../../components/organism/forms/user-register/official-structure';
+import OfficialStructureTable from '../../components/organism/forms/user-register/official-structures';
 import { CardWithHeader } from '../../components/atoms/card/with-header';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import ListOfShareholdersTable from '../../components/organism/forms/user-register/list-of-shareholders';
@@ -54,7 +54,7 @@ const schema = z.object({
   region: z.string().min(1, 'Region is required'),
   facility: z.string().min(1, 'Facility is required'),
   swift_code: z.string().min(1, 'Swift Code is required'),
-  official_structure: z.array(
+  official_structures: z.array(
     z.object({
       name: z.string().min(1, 'Name is required'),
       position: z.string().min(1, 'Position is required'),
@@ -92,7 +92,7 @@ const User: React.FC<UserProps> = ({ setNavState }) => {
       region: '',
       facility: '',
       swift_code: '',
-      official_structure: [
+      official_structures: [
         {
           name: '',
           position: '',
@@ -234,13 +234,13 @@ const User: React.FC<UserProps> = ({ setNavState }) => {
         </CardWithHeader>
         <CardWithHeader 
           icon={<TextSnippetIcon />}
-          label="Official Structure"
+          label="Official Structures"
           sx= {{ 
             marginBottom: '15px'
           }}
         >
           <div className="py-4">
-            <OfficialStructureTable name="official_structure" />
+            <OfficialStructureTable name="official_structures" />
           </div>
         </CardWithHeader>
         <CardWithHeader
