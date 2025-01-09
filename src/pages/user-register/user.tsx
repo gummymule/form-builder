@@ -14,7 +14,7 @@ import ListOfShareholdersTable from '../../components/organism/forms/user-regist
 import TextEditor from '../../components/molecules/text-editor/default';
 import FileUpload from '../../components/molecules/file-upload/default';
 import RadioButtonHorizontal from '../../components/molecules/radio/horizontal';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 const queryOptions = [
   { label: 'General Enquiry', value: 'General Enquiry' },
@@ -140,7 +140,12 @@ const User: React.FC<UserProps> = ({ setNavState }) => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    const payloadData = {
+      ...data,
+      birth_date: data.birth_date ? dayjs(data.birth_date).format('DD-MM-YYYY') : null,
+      register_id: '',
+    };
+    console.log(payloadData);
     setNavState("2");
   };
 
