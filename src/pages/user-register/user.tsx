@@ -15,6 +15,7 @@ import TextEditor from '../../components/molecules/text-editor/default';
 import FileUpload from '../../components/molecules/file-upload/default';
 import RadioButtonHorizontal from '../../components/molecules/radio/horizontal';
 import dayjs from 'dayjs';
+import { ModalSuccessUtil } from '../../helpers/modal';
 
 const queryOptions = [
   { label: 'General Enquiry', value: 'General Enquiry' },
@@ -145,6 +146,9 @@ const User: React.FC<UserProps> = ({ setNavState }) => {
       birth_date: data.birth_date ? dayjs(data.birth_date).format('DD-MM-YYYY') : null,
       register_id: '',
     };
+    ModalSuccessUtil.showModal('User registered successfully!', () => {
+      console.log('User registered successfully!');
+    });
     console.log(payloadData);
     setNavState("2");
   };
