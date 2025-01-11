@@ -24,7 +24,7 @@ const schema = z.object({
       currency: z.string().min(1, 'Currency is required'),
       limit: z.string().min(1, 'Limit is required'),
       exposure: z.string().min(1, 'Exposure is required'),
-      final_exposure: z.string().min(1, 'Final Exposure is required'),
+      final_exposure: z.number().min(1, 'Final Exposure is required'),
     })
   ),
 });
@@ -50,7 +50,7 @@ const Transactions: React.FC<TransactionProps> = ({ setNavState }) => {
         currency: '', 
         limit: '', 
         exposure: '', 
-        final_exposure: '' 
+        final_exposure: 0 
       }],
     },
   });
