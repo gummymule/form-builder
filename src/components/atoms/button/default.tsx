@@ -3,42 +3,48 @@ import { Button, SxProps, Theme } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
 interface ButtonProps {
-  label: string; // Button text
-  type?: "button" | "submit" | "reset"; // Button type (defaults to "button")
-  variant?: "text" | "outlined" | "contained"; // Material-UI button variant
-  color?: "primary" | "secondary" | "error" | "info" | "success" | "warning"; // Button color
-  sx?: SxProps<Theme>; // Additional Material-UI styles
-  disabled?: boolean; // Manually disable the button
-  isFormValid?: boolean; // Disable the button based on form validity
-  onClick?: () => void; // Custom click handler (optional)
+  label?: string;
+  children?: React.ReactNode;
+  type?: "button" | "submit" | "reset";
+  variant?: "text" | "outlined" | "contained";
+  color?: string; 
+  sx?: SxProps<Theme>;
+  disabled?: boolean;
+  isFormValid?: boolean;
+  autoFocus?: boolean; // Add the `autoFocus` prop
+  onClick?: () => void;
 }
+
 
 const ButtonDefault: React.FC<ButtonProps> = ({
   label,
+  children,
   type = "button",
   variant = "contained",
-  color = "primary",
+  color,
   sx,
   disabled = false,
   isFormValid = true,
+  autoFocus,
   onClick,
 }) => {
-  const { formState } = useFormContext(); // Get form state from react-hook-form
+  const { formState } = useFormContext();
 
   return (
     <Button
       type={type}
       variant={variant}
-      color={color}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      color={color as any} // TypeScript expects specific Material-UI colors, so casting might be needed
       sx={sx}
-      disabled={disabled || !isFormValid || formState.isSubmitting} // Disable based on props and form state
+      disabled={disabled || !isFormValid || formState.isSubmitting}
       onClick={onClick}
+      autoFocus={autoFocus}
     >
-      <div className="font-sans text-[20px] font-medium">
-        {label}
-      </div>
+      {children || <div className="font-sans text-[20px] font-medium">{label}</div>}
     </Button>
   );
 };
+
 
 export default ButtonDefault;

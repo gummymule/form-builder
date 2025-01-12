@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { FC } from "react";
+import successImage from '../../../assets/thumb-dialog-success.svg';
 
 interface ModalSuccessProps {
   open: boolean;
@@ -68,7 +69,7 @@ export const ModalSuccess: FC<ModalSuccessProps> = ({
           justifyContent: "center",
         }}
       >
-        <img src="/assets/thumb-dialog-success.svg" alt="Success" />
+        <img className="mx-auto justify-center py-3" src={successImage} alt="Success" />
         <div className="text-lg font-extrabold justify-self-center">{title}</div>
         <div className="text-center mt-4">{description}</div>
       </DialogContent>
@@ -80,8 +81,18 @@ export const ModalSuccess: FC<ModalSuccessProps> = ({
         }}
       >
         <Button
-          sx={{ padding: "8px 0" }}
-          color="primary"
+          sx={{
+            padding: "8px 0",
+            backgroundColor: "#00529C",
+            width: "100%",
+            borderRadius: "5px",
+            color: "#FFFFFF",
+            border: "2px solid transparent", // Initial transparent border
+            "&:hover": {
+              backgroundColor: "#004080", // Darker blue for hover background
+              border: "2px solid #00529C", // Blue border on hover
+            },
+          }}
           onClick={handleButtonClick}
           autoFocus
         >
